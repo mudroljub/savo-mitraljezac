@@ -1,0 +1,23 @@
+{
+  "name": "savo-mitraljezac",
+  "version": "1.0.0",
+  "description": "![](screen.png)",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mudroljub/savo-mitraljezac.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mudroljub/savo-mitraljezac/issues"
+  },
+  "homepage": "https://github.com/mudroljub/savo-mitraljezac#readme",
+  "devDependencies": {
+    "webpack": "^2.2.1"
+  }
+}

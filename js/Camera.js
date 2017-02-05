@@ -1,3 +1,5 @@
+import {MOBILE, CIRCLE} from './constants'
+
 function Camera(canvas, resolution, focalLength) {
   this.ctx = canvas.getContext('2d');
   this.width = canvas.width = window.innerWidth * 0.5;
