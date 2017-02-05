@@ -1,6 +1,6 @@
 [![](screen.png)](https://mudroljub.github.io/savo-mitraljezac/)
 
-# Savo Mitraljezac
+# Savo Mitraljezac ★
 
 Savo Mitraljezac, pucačina iz prvog lica, demo scena.
 
