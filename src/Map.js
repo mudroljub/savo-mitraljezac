@@ -1,15 +1,19 @@
 import Bitmap from './Bitmap'
+import nebo from '../assets/nebo.jpg'
+import kisha from '../assets/kisha.mp3'
+import beton from '../assets/wall_texture.jpg'
+import grom from '../assets/grom.mp3'
 
 export default function Map(size) {
   this.size = size
   this.wallGrid = new Uint8Array(size * size)
-  this.skybox = new Bitmap('assets/nebo.jpg', 2000, 750)
-  this.wallTexture = new Bitmap('assets/wall_texture.jpg', 1024, 1024)
-  this.kisha = new Audio('assets/kisha.mp3')
+  this.skybox = new Bitmap(nebo, 2000, 750)
+  this.wallTexture = new Bitmap(beton, 1024, 1024)
+  this.kisha = new Audio(kisha)
   this.kisha.volume = 0.5
   this.kisha.loop = true
   this.kisha.play()
-  this.grom = new Audio('assets/grom.mp3')
+  this.grom = new Audio(grom)
   this.light = 0 // za svetlo groma
 }
 
@@ -21,16 +25,16 @@ Map.prototype.get = function(x, y) {
 }
 
 Map.prototype.randomize = function() {
-  for (var i = 0; i < this.size * this.size; i++) {
+  for (let i = 0; i < this.size * this.size; i++) {
     this.wallGrid[i] = Math.random() < 0.3 ? 1 : 0
   }
 }
 
 Map.prototype.cast = function(point, angle, range) {
-  var self = this
-  var sin = Math.sin(angle)
-  var cos = Math.cos(angle)
-  var noWall = {
+  const self = this
+  const sin = Math.sin(angle)
+  const cos = Math.cos(angle)
+  const noWall = {
     length2: Infinity
   }
 

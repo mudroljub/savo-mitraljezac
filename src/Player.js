@@ -1,12 +1,14 @@
 import {CIRCLE} from './constants'
 import Bitmap from './Bitmap'
+import mitraljez from '../assets/mitraljez.png'
+import rafal from '../assets/rafal.mp3'
 
 export default function Player(x, y, direction) {
   this.x = x
   this.y = y
   this.direction = direction
-  this.weapon = new Bitmap('assets/mitraljez.png')
-  this.rafal = new Audio('assets/rafal.mp3')
+  this.weapon = new Bitmap(mitraljez)
+  this.rafal = new Audio(rafal)
   this.paces = 0
   document.addEventListener('keydown', e => e.keyCode == 32 && this.rafal.play())
 }

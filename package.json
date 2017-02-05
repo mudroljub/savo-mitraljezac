@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/mudroljub/savo-mitraljezac#readme",
   "devDependencies": {
-    "webpack": "^2.2.1"
+    "webpack": "^2.2.1",
+    "file-loader": "^0.10.0"
   }
 }

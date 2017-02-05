@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 12);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -267,19 +267,31 @@ Controls.prototype.onKey = function(val, e) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Bitmap__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_nebo_jpg__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_nebo_jpg___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__assets_nebo_jpg__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__assets_kisha_mp3__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__assets_kisha_mp3___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__assets_kisha_mp3__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__assets_wall_texture_jpg__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__assets_wall_texture_jpg___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__assets_wall_texture_jpg__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__assets_grom_mp3__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__assets_grom_mp3___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__assets_grom_mp3__);
 /* harmony export (immutable) */ __webpack_exports__["a"] = Map;
+
+
+
+
 
 
 function Map(size) {
   this.size = size
   this.wallGrid = new Uint8Array(size * size)
-  this.skybox = new __WEBPACK_IMPORTED_MODULE_0__Bitmap__["a" /* default */]('assets/nebo.jpg', 2000, 750)
-  this.wallTexture = new __WEBPACK_IMPORTED_MODULE_0__Bitmap__["a" /* default */]('assets/wall_texture.jpg', 1024, 1024)
-  this.kisha = new Audio('assets/kisha.mp3')
+  this.skybox = new __WEBPACK_IMPORTED_MODULE_0__Bitmap__["a" /* default */](__WEBPACK_IMPORTED_MODULE_1__assets_nebo_jpg___default.a, 2000, 750)
+  this.wallTexture = new __WEBPACK_IMPORTED_MODULE_0__Bitmap__["a" /* default */](__WEBPACK_IMPORTED_MODULE_3__assets_wall_texture_jpg___default.a, 1024, 1024)
+  this.kisha = new Audio(__WEBPACK_IMPORTED_MODULE_2__assets_kisha_mp3___default.a)
   this.kisha.volume = 0.5
   this.kisha.loop = true
   this.kisha.play()
-  this.grom = new Audio('assets/grom.mp3')
+  this.grom = new Audio(__WEBPACK_IMPORTED_MODULE_4__assets_grom_mp3___default.a)
   this.light = 0 // za svetlo groma
 }
 
@@ -291,16 +303,16 @@ Map.prototype.get = function(x, y) {
 }
 
 Map.prototype.randomize = function() {
-  for (var i = 0; i < this.size * this.size; i++) {
+  for (let i = 0; i < this.size * this.size; i++) {
     this.wallGrid[i] = Math.random() < 0.3 ? 1 : 0
   }
 }
 
 Map.prototype.cast = function(point, angle, range) {
-  var self = this
-  var sin = Math.sin(angle)
-  var cos = Math.cos(angle)
-  var noWall = {
+  const self = this
+  const sin = Math.sin(angle)
+  const cos = Math.cos(angle)
+  const noWall = {
     length2: Infinity
   }
 
@@ -364,7 +376,13 @@ Map.prototype.update = function(dt) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__constants__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Bitmap__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__assets_mitraljez_png__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__assets_mitraljez_png___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__assets_mitraljez_png__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__assets_rafal_mp3__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__assets_rafal_mp3___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__assets_rafal_mp3__);
 /* harmony export (immutable) */ __webpack_exports__["a"] = Player;
+
+
 
 
 
@@ -372,8 +390,8 @@ function Player(x, y, direction) {
   this.x = x
   this.y = y
   this.direction = direction
-  this.weapon = new __WEBPACK_IMPORTED_MODULE_1__Bitmap__["a" /* default */]('assets/mitraljez.png')
-  this.rafal = new Audio('assets/rafal.mp3')
+  this.weapon = new __WEBPACK_IMPORTED_MODULE_1__Bitmap__["a" /* default */](__WEBPACK_IMPORTED_MODULE_2__assets_mitraljez_png___default.a)
+  this.rafal = new Audio(__WEBPACK_IMPORTED_MODULE_3__assets_rafal_mp3___default.a)
   this.paces = 0
   document.addEventListener('keydown', e => e.keyCode == 32 && this.rafal.play())
 }
@@ -400,6 +418,42 @@ Player.prototype.update = function(controls, map, seconds) {
 
 /***/ }),
 /* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "assets/grom.db8792fcb91c00bfe61aa03d719ce705.mp3";
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "assets/kisha.551e6204e6aba49d8abb803b94cb1ee4.mp3";
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "assets/mitraljez.7493aeaac72e67acd68fe69ab3be4258.png";
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "assets/nebo.ead5c3e4250ed51f83a8fb11b82a5549.jpg";
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "assets/rafal.3d05968fc392a7ae4f7fcdfea653c13b.mp3";
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "assets/wall_texture.d7fdc1c2fed0b9216ffd9cf3584a84ef.jpg";
+
+/***/ }),
+/* 12 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
