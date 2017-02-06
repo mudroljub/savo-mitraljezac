@@ -4,35 +4,39 @@ import Player from './Player'
 import Map from './Map'
 import Camera from './Camera'
 
-function GameLoop() {
-  this.frame = this.frame.bind(this);
-  this.lastTime = 0;
-  this.callback = function() {};
+class GameLoop {
+  constructor() {
+    this.frame = this.frame.bind(this)
+    this.lastTime = 0
+    this.callback = function() {}
+  }
+
+  start(callback) {
+    this.callback = callback
+    requestAnimationFrame(this.frame)
+  }
+
+  frame(time) {
+    const dt = (time - this.lastTime) / 1000
+    this.lastTime = time
+    if (dt < 0.2) this.callback(dt)
+    requestAnimationFrame(this.frame)
+  }
 }
 
-GameLoop.prototype.start = function(callback) {
-  this.callback = callback;
-  requestAnimationFrame(this.frame);
-};
+/** INIT **/
 
-GameLoop.prototype.frame = function(time) {
-  var seconds = (time - this.lastTime) / 1000;
-  this.lastTime = time;
-  if (seconds < 0.2) this.callback(seconds);
-  requestAnimationFrame(this.frame);
-};
+const display = document.getElementById('display')
+const player = new Player(15.3, -1.2, Math.PI * 0.3)
+const map = new Map(32)
+const controls = new Controls()
+const camera = new Camera(display, MOBILE ? 160 : 320, 0.8)
+const loop = new GameLoop()
 
-var display = document.getElementById('display');
-var player = new Player(15.3, -1.2, Math.PI * 0.3);
-var map = new Map(32);
-var controls = new Controls();
-var camera = new Camera(display, MOBILE ? 160 : 320, 0.8);
-var loop = new GameLoop();
+map.randomize()
 
-map.randomize();
-
-loop.start(function frame(seconds) {
-  map.update(seconds);
-  player.update(controls.states, map, seconds);
-  camera.render(player, map);
-});
+loop.start(dt => {
+  map.update(dt)
+  player.update(controls.states, map, dt)
+  camera.render(player, map)
+})

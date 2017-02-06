@@ -4,7 +4,8 @@
   "description": "![](screen.png)",
   "main": "index.js",
   "scripts": {
-    "start": "webpack"
+    "start": "webpack-dev-server",
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
@@ -18,7 +19,8 @@
   },
   "homepage": "https://github.com/mudroljub/savo-mitraljezac#readme",
   "devDependencies": {
+    "file-loader": "^0.10.0",
     "webpack": "^2.2.1",
-    "file-loader": "^0.10.0"
+    "webpack-dev-server": "^2.3.0"
   }
 }
