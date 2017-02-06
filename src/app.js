@@ -4,6 +4,17 @@ import Player from './Player'
 import Map from './Map'
 import Camera from './Camera'
 
+const slike = ['../assets/nebo.jpg', '../assets/wall_texture.jpg', '../assets/mitraljez.png']
+
+const ucitaj = src => {
+  return new Promise((uspeh, neuspeh) => {
+    const img = new Image()
+    img.onload = () => uspeh()
+    img.onerror = () => neuspeh()
+    img.src = src
+  })
+}
+
 class GameLoop {
   constructor() {
     this.frame = this.frame.bind(this)
@@ -35,8 +46,10 @@ const loop = new GameLoop()
 
 map.randomize()
 
-loop.start(dt => {
+const mainLoop = dt => {
   map.update(dt)
   player.update(controls.states, map, dt)
   camera.render(player, map)
-})
+}
+
+Promise.all(slike.map(ucitaj)).then(() => loop.start(mainLoop))

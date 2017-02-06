@@ -3,6 +3,9 @@
       "browser": true,
       "node": true,
   },
+  "globals": {
+      "Promise": false
+  },
   "rules": {
       "semi": ["error", "never"],
       "quotes": ["error", "single"],
