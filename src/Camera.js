@@ -1,99 +1,99 @@
 import {MOBILE, CIRCLE} from './constants'
 
 export default function Camera(canvas, resolution, focalLength) {
-  this.ctx = canvas.getContext('2d');
-  this.width = canvas.width = window.innerWidth * 0.5;
-  this.height = canvas.height = window.innerHeight * 0.5;
-  this.resolution = resolution;
-  this.spacing = this.width / resolution;
-  this.focalLength = focalLength || 0.8;
-  this.range = MOBILE ? 8 : 14;
-  this.lightRange = 15;
-  this.scale = (this.width + this.height) / 1200;
+  this.ctx = canvas.getContext('2d')
+  this.width = canvas.width = window.innerWidth * 0.5
+  this.height = canvas.height = window.innerHeight * 0.5
+  this.resolution = resolution
+  this.spacing = this.width / resolution
+  this.focalLength = focalLength || 0.8
+  this.range = MOBILE ? 8 : 14
+  this.lightRange = 15
+  this.scale = (this.width + this.height) / 1200
 }
 
 Camera.prototype.render = function(player, map) {
-  this.drawSky(player.direction, map.skybox, map.light);
-  this.drawColumns(player, map);
-  this.drawWeapon(player.weapon, player.paces);
-};
+  this.drawSky(player.direction, map.skybox, map.light)
+  this.drawColumns(player, map)
+  this.drawWeapon(player.weapon, player.paces)
+}
 
 Camera.prototype.drawSky = function(direction, sky, ambient) {
-  var width = sky.width * (this.height / sky.height) * 2;
-  var left = (direction / CIRCLE) * -width;
+  const width = sky.width * (this.height / sky.height) * 2
+  let left = (direction / CIRCLE) * -width
 
-  this.ctx.save();
+  this.ctx.save()
   this.ctx.fillStyle = '#701206'
   this.ctx.fillRect(0, this.height/2, this.width, this.height)  // crta tlo
-  this.ctx.drawImage(sky.image, left, 0, width, this.height * 0.5);
+  this.ctx.drawImage(sky.image, left, 0, width, this.height * 0.5)
   if (left < width - this.width) {
-    this.ctx.drawImage(sky.image, left + width, 0, width, this.height * 0.5 );
+    this.ctx.drawImage(sky.image, left + width, 0, width, this.height * 0.5)
   }
   if (ambient > 0) {
-    this.ctx.fillStyle = '#ffffff';
-    this.ctx.globalAlpha = ambient * 0.1;
-    this.ctx.fillRect(0, this.height * 0.5, this.width, this.height * 0.5);
+    this.ctx.fillStyle = '#ffffff'
+    this.ctx.globalAlpha = ambient * 0.1
+    this.ctx.fillRect(0, this.height * 0.5, this.width, this.height * 0.5)
   }
-  this.ctx.restore();
-};
+  this.ctx.restore()
+}
 
 Camera.prototype.drawColumns = function(player, map) {
-  this.ctx.save();
-  for (var column = 0; column < this.resolution; column++) {
-    var x = column / this.resolution - 0.5;
-    var angle = Math.atan2(x, this.focalLength);
-    var ray = map.cast(player, player.direction + angle, this.range);
-    this.drawColumn(column, ray, angle, map);
+  this.ctx.save()
+  for (let column = 0; column < this.resolution; column++) {
+    const x = column / this.resolution - 0.5
+    let angle = Math.atan2(x, this.focalLength)
+    let ray = map.cast(player, player.direction + angle, this.range)
+    this.drawColumn(column, ray, angle, map)
   }
-  this.ctx.restore();
-};
+  this.ctx.restore()
+}
 
 Camera.prototype.drawWeapon = function(weapon, paces) {
-  var bobX = Math.cos(paces * 2) * this.scale * 6;
-  var bobY = Math.sin(paces * 4) * this.scale * 6;
-  var left = this.width * 0.20 + bobX;
-  var top = this.height * 0.6 + bobY;
-  this.ctx.drawImage(weapon.image, left, top, weapon.width * this.scale, weapon.height * this.scale);
-};
+  const bobX = Math.cos(paces * 2) * this.scale * 6
+  let bobY = Math.sin(paces * 4) * this.scale * 6
+  let left = this.width * 0.20 + bobX
+  let top = this.height * 0.6 + bobY
+  this.ctx.drawImage(weapon.image, left, top, weapon.width * this.scale, weapon.height * this.scale)
+}
 
 Camera.prototype.drawColumn = function(column, ray, angle, map) {
-  var ctx = this.ctx;
-  var texture = map.wallTexture;
-  var left = Math.floor(column * this.spacing);
-  var width = Math.ceil(this.spacing);
-  var hit = -1;
+  const ctx = this.ctx
+  let texture = map.wallTexture
+  let left = Math.floor(column * this.spacing)
+  let width = Math.ceil(this.spacing)
+  let hit = -1
 
   while (++hit < ray.length && ray[hit].height <= 0);
 
-  for (var s = ray.length - 1; s >= 0; s--) {
-    var step = ray[s];
-    var rainDrops = Math.pow(Math.random(), 3) * s;
-    var rain = (rainDrops > 0) && this.project(0.1, angle, step.distance);
+  for (let s = ray.length - 1; s >= 0; s--) {
+    const step = ray[s]
+    let rainDrops = Math.pow(Math.random(), 3) * s
+    let rain = (rainDrops > 0) && this.project(0.1, angle, step.distance)
 
     if (s === hit) {
-      var textureX = Math.floor(texture.width * step.offset);
-      var wall = this.project(step.height, angle, step.distance);
+      const textureX = Math.floor(texture.width * step.offset)
+      let wall = this.project(step.height, angle, step.distance)
 
-      ctx.globalAlpha = 1;
-      ctx.drawImage(texture.image, textureX, 0, 1, texture.height, left, wall.top, width, wall.height);
+      ctx.globalAlpha = 1
+      ctx.drawImage(texture.image, textureX, 0, 1, texture.height, left, wall.top, width, wall.height)
 
-      ctx.fillStyle = '#000000';
-      ctx.globalAlpha = Math.max((step.distance + step.shading) / this.lightRange - map.light, 0);
-      ctx.fillRect(left, wall.top, width, wall.height);
+      ctx.fillStyle = '#000000'
+      ctx.globalAlpha = Math.max((step.distance + step.shading) / this.lightRange - map.light, 0)
+      ctx.fillRect(left, wall.top, width, wall.height)
     }
 
-    ctx.fillStyle = '#ffffff';
-    ctx.globalAlpha = 0.15;
-    while (--rainDrops > 0) ctx.fillRect(left, Math.random() * rain.top, 1, rain.height);
+    ctx.fillStyle = '#ffffff'
+    ctx.globalAlpha = 0.15
+    while (--rainDrops > 0) ctx.fillRect(left, Math.random() * rain.top, 1, rain.height)
   }
-};
+}
 
 Camera.prototype.project = function(height, angle, distance) {
-  var z = distance * Math.cos(angle);
-  var wallHeight = this.height * height / z;
-  var bottom = this.height / 2 * (1 + 1 / z);
+  const z = distance * Math.cos(angle)
+  let wallHeight = this.height * height / z
+  let bottom = this.height / 2 * (1 + 1 / z)
   return {
     top: bottom - wallHeight,
     height: wallHeight
-  };
-};
+  }
+}

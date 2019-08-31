@@ -18,8 +18,8 @@ Player.prototype.rotate = function(angle) {
 }
 
 Player.prototype.walk = function(distance, map) {
-  var dx = Math.cos(this.direction) * distance
-  var dy = Math.sin(this.direction) * distance
+  const dx = Math.cos(this.direction) * distance
+  const dy = Math.sin(this.direction) * distance
   if (map.get(this.x + dx, this.y) <= 0) this.x += dx
   if (map.get(this.x, this.y + dy) <= 0) this.y += dy
   this.paces += distance
